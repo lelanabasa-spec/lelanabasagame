@@ -1,0 +1,400 @@
+/* Responsive Mobile Landscape Menu */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.menu-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Use CSS background image to avoid z-index blocking issues on mobile */
+  background-image: url('/menu_assets/bg_menu.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #000;
+  touch-action: manipulation;
+}
+
+/* Individual Top Buttons with explicit high z-index and touch-action */
+.info-btn,
+.logout-btn {
+  position: absolute;
+  z-index: 100;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  width: 12vh;
+  height: 12vh;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+  touch-action: manipulation;
+}
+
+.info-btn {
+  top: 5vh;
+  left: 5vw;
+}
+
+.sound-btn {
+  top: 5vh;
+  right: 5vw;
+}
+
+.logout-btn {
+  bottom: 5vh;
+  right: 5vw;
+}
+
+/* Hover effects only on desktop with hover capabilities */
+@media (hover: hover) and (pointer: fine) {
+
+  .info-btn:hover,
+  .sound-btn:hover,
+  .logout-btn:hover {
+    transform: scale(1.5);
+  }
+}
+
+/* Use opacity instead of scale on active to avoid touch-cancel issues on mobile */
+.info-btn:active,
+.sound-btn:active,
+.logout-btn:active {
+  opacity: 0.7;
+}
+
+/* CRITICAL: Set pointer-events: none on images inside buttons/containers 
+   so touch events directly target the clickable elements (button / overlay-btn) */
+.icon-img {
+  object-fit: contain;
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+  pointer-events: none;
+}
+
+/* Center Content Area */
+.menu-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  /* Shift the entire central menu upwards to clear the character's body and the buffalo */
+  transform: translateY(-4vh);
+}
+
+.menu-logo-container {
+  width: 60vh;
+  max-width: 90vw;
+  aspect-ratio: 5 / 3;
+  /* Matches 500 / 300 */
+  /* Pull the subtitle ribbon much closer to the wooden sign */
+  margin-bottom: -7vh;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+  /* CRITICAL: Prevent container from shrinking to 0 height on small landscape viewports */
+}
+
+.menu-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.6));
+  pointer-events: none;
+}
+
+.subtitle-container {
+  width: 52vh;
+  max-width: 80vw;
+  aspect-ratio: 5 / 1;
+  /* Matches 400 / 80 */
+  /* Pull the options menu closer to the subtitle ribbon */
+  margin-bottom: 2vh;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+  /* CRITICAL: Prevent container from shrinking to 0 height on small landscape viewports */
+}
+
+.subtitle-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
+  pointer-events: none;
+}
+
+.options-container {
+  position: relative;
+  width: 52vh;
+  max-width: 80vw;
+  aspect-ratio: 3 / 2;
+  /* Matches 300 / 200 */
+  z-index: 30;
+  flex-shrink: 0;
+  /* CRITICAL: Prevent container from shrinking to 0 height on small landscape viewports */
+}
+
+.options-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+  pointer-events: none;
+}
+
+/* Button overlays */
+.options-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1% 0;
+  z-index: 40;
+  touch-action: manipulation;
+}
+
+.overlay-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  border-radius: 4px;
+  touch-action: manipulation;
+  transition: background-color 0.2s ease;
+  width: 100%;
+  display: block;
+  /* CRITICAL: Ensure block display for correct layout calculation */
+  height: 100%;
+  /* CRITICAL: Take up full height of the flex segment */
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .overlay-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+}
+
+.overlay-btn:active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Portrait orientation safety fallback */
+@media (orientation: portrait) {
+  .menu-logo-container {
+    width: 80vw;
+    margin-bottom: -1vw;
+  }
+
+  .subtitle-container {
+    width: 60vw;
+    margin-bottom: 5vw;
+  }
+
+  .options-container {
+    width: 60vw;
+  }
+
+  .info-btn {
+    top: 3vh;
+    left: 4vw;
+  }
+
+  .sound-btn {
+    top: 3vh;
+    right: 4vw;
+  }
+
+  .logout-btn {
+    bottom: 3vh;
+    right: 4vw;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .info-btn:hover, .logout-btn:hover {
+    filter: brightness(1.1);
+    transform: scale(1.15);
+  }
+}
+
+.info-btn:active, .logout-btn:active {
+  opacity: 0.7;
+  transform: scale(1.7);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px), (max-height: 500px) {
+  .info-btn,
+.logout-btn {
+  position: absolute;
+  z-index: 100;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  width: 12vh;
+  height: 12vh;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+  touch-action: manipulation;
+}
+  .info-btn:hover, .logout-btn:hover {
+    transform: scale(0.95);
+  }
+}
+
+/* Progressive zoom out scaling */
+@media (min-width: 1500px) and (min-height: 700px) {
+  .info-btn,
+.logout-btn {
+  position: absolute;
+  z-index: 100;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  width: 12vh;
+  height: 12vh;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+  touch-action: manipulation;
+}
+
+  .info-btn:hover, .logout-btn:hover {
+    transform: scale(1);
+  }
+}
+
+@media (min-width: 1700px) and (min-height: 700px) {
+  .info-btn,
+.logout-btn {
+  position: absolute;
+  z-index: 100;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  width: 12vh;
+  height: 12vh;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+  touch-action: manipulation;
+}
+
+  .info-btn:hover, .logout-btn:hover {
+    transform: scale(1.15);
+  }
+}
+
+@media (min-width: 1950px) and (min-height: 700px) {
+  .info-btn,
+.logout-btn {
+  position: absolute;
+  z-index: 100;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  width: 12vh;
+  height: 12vh;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+  touch-action: manipulation;
+}
+
+  .info-btn:hover, .logout-btn:hover {
+    transform: scale(1.5);
+  }
+}
+
+@media (min-width: 2200px) and (min-height: 700px) {
+  .info-btn,
+.logout-btn {
+  position: absolute;
+  z-index: 100;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  width: 12vh;
+  height: 12vh;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+  touch-action: manipulation;
+}
+
+  .info-btn:hover, .logout-btn:hover {
+    transform: scale(1.65);
+  }
+}
+
+@media (min-width: 2500px) and (min-height: 700px) {
+  .info-btn,
+.logout-btn {
+  position: absolute;
+  z-index: 100;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  width: 12vh;
+  height: 12vh;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+  touch-action: manipulation;
+}
+
+  .info-btn:hover, .logout-btn:hover {
+    transform: scale(1.85);
+  }
+}

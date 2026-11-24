@@ -1,0 +1,42 @@
+
+.home-btn-wrapper {
+  position: absolute;
+  z-index: 100;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  width: 12vh;
+  height: 12vh;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+  touch-action: manipulation;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-btn-wrapper:hover {
+    filter: brightness(1.1);
+    transform: scale(1.15);
+  }
+}
+
+.home-btn-wrapper:active {
+  opacity: 0.7;
+  transform: scale(0.95);
+}
+
+/* Mobile adjustments */
+@media (orientation: portrait) {
+  .home-btn-wrapper {
+    width: 14vw;
+    height: 14vw;
+    min-width: unset;
+    min-height: unset;
+    max-width: unset;
+    max-height: unset;
+  }
+}
